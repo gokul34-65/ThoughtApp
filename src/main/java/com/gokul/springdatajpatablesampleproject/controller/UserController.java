@@ -2,6 +2,7 @@ package com.gokul.springdatajpatablesampleproject.controller;
 import com.gokul.springdatajpatablesampleproject.model.LoginTemplate;
 import com.gokul.springdatajpatablesampleproject.model.Role;
 import com.gokul.springdatajpatablesampleproject.model.User;
+import com.gokul.springdatajpatablesampleproject.model.UserDTO;
 import com.gokul.springdatajpatablesampleproject.service.JwtUtil;
 import com.gokul.springdatajpatablesampleproject.service.RoleService;
 import com.gokul.springdatajpatablesampleproject.service.UserService;
@@ -29,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping("{username}")
-    public ResponseEntity<User> getUser(@PathVariable String username){
-        return new ResponseEntity<>(userService.getByUserName(username), HttpStatus.OK);
+    public ResponseEntity<UserDTO> getUser(@PathVariable String username){
+        return new ResponseEntity<>(userService.getUserDTOByUsername(username), HttpStatus.OK);
     }
 }

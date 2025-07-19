@@ -3,6 +3,7 @@ package com.gokul.springdatajpatablesampleproject.service;
 
 import com.gokul.springdatajpatablesampleproject.model.Role;
 import com.gokul.springdatajpatablesampleproject.model.User;
+import com.gokul.springdatajpatablesampleproject.model.UserDTO;
 import com.gokul.springdatajpatablesampleproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,6 +45,15 @@ public class UserService {
 
     public User getByUserName(String username){
         return  userRepository.findByUsername(username);
+    }
+
+    public UserDTO getUserDTOByUsername(String username){
+        UserDTO userDTO = new UserDTO();
+        User user = userRepository.findByUsername(username);
+        userDTO.setDisplayName(user.getDisplayName());
+        userDTO.setBio(user.getBio());
+        userDTO.setLocation(user.getLocation());
+        return userDTO;
     }
 
 
