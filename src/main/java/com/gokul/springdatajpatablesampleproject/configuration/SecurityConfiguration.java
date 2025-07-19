@@ -39,12 +39,11 @@ public class SecurityConfiguration {
         return daoAuthenticationProvider;
     }
 
-
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.csrf(customizer -> customizer.disable());
         http.authorizeHttpRequests(customizer -> customizer
-                .requestMatchers("/register","/login").permitAll()
+                .requestMatchers("/auth/*").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated());
         http.httpBasic(Customizer.withDefaults());

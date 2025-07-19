@@ -40,8 +40,10 @@ public class UserService {
     public List<User> getAllUsers(){
         return userRepository.findAll();
     }
+
+
     public User getByUserName(String username){
-        return userRepository.findByUsername(username);
+        return  userRepository.findByUsername(username);
     }
 
 

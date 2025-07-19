@@ -18,8 +18,6 @@ import java.io.IOException;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
-
-
     @Autowired
     private JwtUtil  jwtUtil;
     private AuthenticationManager authenticationManager;
@@ -31,6 +29,7 @@ public class JwtFilter extends OncePerRequestFilter {
         if (authorization == null || !authorization.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
+
         }
         String token = authorization.substring(7);
         String username = jwtUtil.extractUserName(token);
