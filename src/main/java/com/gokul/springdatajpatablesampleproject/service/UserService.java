@@ -54,6 +54,7 @@ public class UserService {
     public UserDTO getUserDTOByUsername(String username){
         UserDTO userDTO = new UserDTO();
         User user = userRepository.findByUsername(username);
+        userDTO.setUsername(user.getUsername());
         userDTO.setDisplayName(user.getDisplayName());
         userDTO.setBio(user.getBio());
         userDTO.setLocation(user.getLocation());
