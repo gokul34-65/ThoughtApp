@@ -1,6 +1,7 @@
 package com.gokul.springdatajpatablesampleproject.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,8 +18,11 @@ import java.util.Set;
 public class User {
     @Id
     private String username;
+    @NotEmpty(message = "do not leave password empty")
     private String password;
+    @NotEmpty(message = "do not leave displayName empty")
     private String displayName;
+
     private String bio;
     private String location;
     @ManyToMany(fetch = FetchType.EAGER)
