@@ -1,5 +1,6 @@
 package com.gokul.springdatajpatablesampleproject.model;
 
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,11 +14,20 @@ public class UserPrincipal implements UserDetails {
     private String username;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
+    @Getter
+    private String displayName;
+    @Getter
+    private String bio;
+    @Getter
+    private String location;
 
 
-    public UserPrincipal(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserPrincipal(String username, String password,  String displayName, String bio, String location, Collection<? extends GrantedAuthority> authorities) {
         this.username = username;
         this.password = password;
+        this.displayName = displayName;
+        this.bio = bio;
+        this.location = location;
         this.authorities = authorities;
     }
 
@@ -29,6 +39,9 @@ public class UserPrincipal implements UserDetails {
         return new UserPrincipal(
                 user.getUsername(),
                 user.getPassword(),
+                user.getDisplayName(),
+                user.getBio(),
+                user.getLocation(),
                 authorities
         );
     }
