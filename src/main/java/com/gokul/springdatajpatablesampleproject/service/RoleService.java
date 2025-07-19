@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Service
 public class RoleService {
 
@@ -21,5 +24,11 @@ public class RoleService {
        }
        roleRepository.save(role);
        return ResponseEntity.status(HttpStatus.CREATED).body("Role added");
+    }
+
+    public Set<Role> getUserRole(){
+        Set<Role> roles = new HashSet<>();
+        roles.add(roleRepository.findById(2).get());
+        return roles;
     }
 }

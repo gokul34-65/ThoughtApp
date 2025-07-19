@@ -1,6 +1,7 @@
 package com.gokul.springdatajpatablesampleproject.service;
 
 
+import com.gokul.springdatajpatablesampleproject.model.Role;
 import com.gokul.springdatajpatablesampleproject.model.User;
 import com.gokul.springdatajpatablesampleproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -17,6 +19,9 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    RoleService roleService;
+
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     public ResponseEntity<String> addUser(User user) {
@@ -24,6 +29,10 @@ public class UserService {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("User already exists");
         }
         user.setPassword(encoder.encode(user.getPassword()));
+        //check to see if roles[] is empty, if empty assign a default role(USER)
+        if(user.getRoles() == null || user.getRoles().isEmpty()) {
+            user.setRoles(roleService.getUserRole());
+        }
         userRepository.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).body("User added");
     }
