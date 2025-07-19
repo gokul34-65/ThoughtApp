@@ -18,6 +18,9 @@ public class User {
     @Id
     private String username;
     private String password;
+    private String displayName;
+    private String bio;
+    private String location;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
