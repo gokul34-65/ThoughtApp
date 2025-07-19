@@ -5,6 +5,7 @@ import com.gokul.springdatajpatablesampleproject.model.Role;
 import com.gokul.springdatajpatablesampleproject.model.User;
 import com.gokul.springdatajpatablesampleproject.model.UserDTO;
 import com.gokul.springdatajpatablesampleproject.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,9 @@ public class UserService {
 
     @Autowired
     RoleService roleService;
+
+    @Autowired
+    JwtUtil jwtUtil;
 
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
@@ -57,5 +61,10 @@ public class UserService {
     }
 
 
-
+    public UserDTO getCurrentUserDTO(HttpServletRequest request) {
+        String authorization = request.getHeader("Authorization");
+        String token = authorization.substring(7);
+        String username = jwtUtil.extractUserName(token);
+        return getUserDTOByUsername(username);
+    }
 }
