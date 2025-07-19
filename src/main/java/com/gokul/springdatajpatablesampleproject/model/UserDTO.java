@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class UserDTO {
 
-    private String username;
+
     private String displayName;
     private String bio;
     private String location;
@@ -15,19 +15,12 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(String username, String displayName, String bio, String location) {
+    public UserDTO(String displayName, String bio, String location) {
         this.displayName = displayName;
         this.bio = bio;
         this.location = location;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public String getDisplayName() {
         return displayName;

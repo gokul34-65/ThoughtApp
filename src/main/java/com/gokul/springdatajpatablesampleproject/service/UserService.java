@@ -6,6 +6,7 @@ import com.gokul.springdatajpatablesampleproject.model.User;
 import com.gokul.springdatajpatablesampleproject.model.UserDTO;
 import com.gokul.springdatajpatablesampleproject.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,8 @@ public class UserService {
 
     @Autowired
     JwtUtil jwtUtil;
+
+
 
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
@@ -54,7 +57,6 @@ public class UserService {
     public UserDTO getUserDTOByUsername(String username){
         UserDTO userDTO = new UserDTO();
         User user = userRepository.findByUsername(username);
-        userDTO.setUsername(user.getUsername());
         userDTO.setDisplayName(user.getDisplayName());
         userDTO.setBio(user.getBio());
         userDTO.setLocation(user.getLocation());
@@ -63,9 +65,25 @@ public class UserService {
 
 
     public UserDTO getCurrentUserDTO(HttpServletRequest request) {
+        String username = getUsernameFromRequest(request);
+        return getUserDTOByUsername(username);
+    }
+
+    public String getUsernameFromRequest(HttpServletRequest request) {
         String authorization = request.getHeader("Authorization");
         String token = authorization.substring(7);
         String username = jwtUtil.extractUserName(token);
-        return getUserDTOByUsername(username);
+        return username;
+    }
+
+    public ResponseEntity<String> updateCurrentUser(HttpServletRequest request, UserDTO userDTO) {
+        String username = getUsernameFromRequest(request);
+        User user = userRepository.findByUsername(username);
+        user.setBio(userDTO.getBio());
+        user.setLocation(userDTO.getLocation());
+        user.setDisplayName(userDTO.getDisplayName());
+        userRepository.save(user);
+
+        return new  ResponseEntity<>("updation successful", HttpStatus.OK);
     }
 }

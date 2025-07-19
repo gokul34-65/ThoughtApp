@@ -44,4 +44,9 @@ public class UserController {
     public ResponseEntity<UserDTO> getMe(HttpServletRequest request){
         return new ResponseEntity<>(userService.getCurrentUserDTO(request), HttpStatus.OK);
     }
+
+    @PutMapping("profile")
+    public ResponseEntity<String> updateProfile(HttpServletRequest request, @RequestBody UserDTO userDTO){
+        return userService.updateCurrentUser(request, userDTO);
+    }
 }
