@@ -1,19 +1,14 @@
 package com.gokul.springdatajpatablesampleproject.service;
 
-
-import com.gokul.springdatajpatablesampleproject.model.Role;
 import com.gokul.springdatajpatablesampleproject.model.User;
 import com.gokul.springdatajpatablesampleproject.model.UserDTO;
 import com.gokul.springdatajpatablesampleproject.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -26,8 +21,7 @@ public class UserService {
     RoleService roleService;
 
     @Autowired
-    JwtUtil jwtUtil;
-
+    Util util;
 
 
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
@@ -54,30 +48,10 @@ public class UserService {
         return  userRepository.findByUsername(username);
     }
 
-    public UserDTO getUserDTOByUsername(String username){
-        UserDTO userDTO = new UserDTO();
-        User user = userRepository.findByUsername(username);
-        userDTO.setDisplayName(user.getDisplayName());
-        userDTO.setBio(user.getBio());
-        userDTO.setLocation(user.getLocation());
-        return userDTO;
-    }
 
-
-    public UserDTO getCurrentUserDTO(HttpServletRequest request) {
-        String username = getUsernameFromRequest(request);
-        return getUserDTOByUsername(username);
-    }
-
-    public String getUsernameFromRequest(HttpServletRequest request) {
-        String authorization = request.getHeader("Authorization");
-        String token = authorization.substring(7);
-        String username = jwtUtil.extractUserName(token);
-        return username;
-    }
 
     public ResponseEntity<String> updateCurrentUser(HttpServletRequest request, UserDTO userDTO) {
-        String username = getUsernameFromRequest(request);
+        String username = util.getUsernameFromRequest(request);
         User user = userRepository.findByUsername(username);
         user.setBio(userDTO.getBio());
         user.setLocation(userDTO.getLocation());

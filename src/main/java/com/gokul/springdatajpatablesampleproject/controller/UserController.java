@@ -1,11 +1,6 @@
 package com.gokul.springdatajpatablesampleproject.controller;
-import com.gokul.springdatajpatablesampleproject.model.LoginTemplate;
-import com.gokul.springdatajpatablesampleproject.model.Role;
-import com.gokul.springdatajpatablesampleproject.model.User;
-import com.gokul.springdatajpatablesampleproject.model.UserDTO;
-import com.gokul.springdatajpatablesampleproject.service.JwtUtil;
-import com.gokul.springdatajpatablesampleproject.service.RoleService;
-import com.gokul.springdatajpatablesampleproject.service.UserService;
+import com.gokul.springdatajpatablesampleproject.model.*;
+import com.gokul.springdatajpatablesampleproject.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +23,10 @@ public class UserController {
     UserService userService;
 
     @Autowired
-    JwtUtil  jwtUtil;
+    PostService postService;
+
+    @Autowired
+    Util util;
 
     @PostMapping("addRole")
     public ResponseEntity<String> addRole(@RequestBody Role role){
@@ -37,16 +35,21 @@ public class UserController {
 
     @GetMapping("{username}")
     public ResponseEntity<UserDTO> getUser(@PathVariable String username){
-        return new ResponseEntity<>(userService.getUserDTOByUsername(username), HttpStatus.OK);
+        return new ResponseEntity<>(util.getUserDTOByUsername(username), HttpStatus.OK);
     }
 
     @GetMapping("me")
     public ResponseEntity<UserDTO> getMe(HttpServletRequest request){
-        return new ResponseEntity<>(userService.getCurrentUserDTO(request), HttpStatus.OK);
+        return new ResponseEntity<>(util.getCurrentUserDTO(request), HttpStatus.OK);
     }
 
     @PutMapping("profile")
     public ResponseEntity<String> updateProfile(HttpServletRequest request, @RequestBody UserDTO userDTO){
         return userService.updateCurrentUser(request, userDTO);
+    }
+
+    @PostMapping("post")
+    public ResponseEntity<String> post(HttpServletRequest request, @RequestBody Post post){
+        return postService.addPost(request,post);
     }
 }

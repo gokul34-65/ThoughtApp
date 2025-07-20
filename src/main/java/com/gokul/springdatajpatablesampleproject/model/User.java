@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.FetchMode;
 import org.hibernate.annotations.Fetch;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -35,6 +36,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Post> posts;
 
     public void addRole(Role role){
         this.roles.add(role);
