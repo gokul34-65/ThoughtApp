@@ -28,6 +28,9 @@ public class UserController {
     @Autowired
     Util util;
 
+    @Autowired
+    FollowService followService;
+
     @PostMapping("addRole")
     public ResponseEntity<String> addRole(@RequestBody Role role){
         return roleService.addRole(role);
@@ -51,5 +54,10 @@ public class UserController {
     @PostMapping("post")
     public ResponseEntity<String> post(HttpServletRequest request, @RequestBody Post post){
         return postService.addPost(request,post);
+    }
+
+    @PostMapping("/follow/{username}")
+    public ResponseEntity<String> follow(@PathVariable String username,HttpServletRequest request){
+        return followService.addFollower(username,request);
     }
 }
