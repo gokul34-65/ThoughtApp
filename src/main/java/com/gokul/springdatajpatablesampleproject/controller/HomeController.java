@@ -1,14 +1,8 @@
 package com.gokul.springdatajpatablesampleproject.controller;
-
-
 import com.gokul.springdatajpatablesampleproject.model.Post;
-import com.gokul.springdatajpatablesampleproject.model.PostDTO;
-import com.gokul.springdatajpatablesampleproject.model.Role;
-import com.gokul.springdatajpatablesampleproject.model.UserDTO;
 import com.gokul.springdatajpatablesampleproject.service.PostService;
 import com.gokul.springdatajpatablesampleproject.service.RoleService;
 import com.gokul.springdatajpatablesampleproject.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +30,7 @@ public class HomeController {
     }
 
     @GetMapping("posts")
-    public ResponseEntity<List<PostDTO>> getAllPosts() {
+    public ResponseEntity<List<Post>> getAllPosts() {
         return new ResponseEntity<>(postService.getAllPostDTOs(), HttpStatus.OK);
     }
 }
