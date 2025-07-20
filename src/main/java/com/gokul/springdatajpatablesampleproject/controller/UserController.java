@@ -66,4 +66,9 @@ public class UserController {
     public ResponseEntity<List<UserDTO>> getFollowers(HttpServletRequest request){
         return followService.getFollowers(request);
     }
+
+    @GetMapping("personalFeed")
+    public ResponseEntity<List<Post>> getPersonalFeed(HttpServletRequest request){
+        return postService.getPersonalFeed(request);
+    }
 }

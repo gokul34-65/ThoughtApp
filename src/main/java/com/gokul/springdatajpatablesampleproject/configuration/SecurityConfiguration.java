@@ -1,6 +1,5 @@
 package com.gokul.springdatajpatablesampleproject.configuration;
 
-
 import com.gokul.springdatajpatablesampleproject.service.JwtFilter;
 import com.gokul.springdatajpatablesampleproject.service.JwtUtil;
 import com.gokul.springdatajpatablesampleproject.service.MyUserDetailsService;

@@ -1,6 +1,8 @@
 package com.gokul.springdatajpatablesampleproject.service;
 
+import com.gokul.springdatajpatablesampleproject.model.Follow;
 import com.gokul.springdatajpatablesampleproject.model.Post;
+import com.gokul.springdatajpatablesampleproject.repository.FollowRepository;
 import com.gokul.springdatajpatablesampleproject.repository.PostRepository;
 import com.gokul.springdatajpatablesampleproject.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,6 +24,9 @@ public class PostService {
     UserRepository userRepository;
 
     @Autowired
+    FollowRepository followRepository;
+
+    @Autowired
     Util util;
 
     public ResponseEntity<String> addPost(HttpServletRequest request, Post post){
@@ -37,5 +42,18 @@ public class PostService {
             postDTOs.add(new Post(post.getId(),post.getContent(),post.getUsername()));
         }
          return postDTOs;
+    }
+
+    public ResponseEntity<List<Post>> getPersonalFeed(HttpServletRequest request) {
+        String username = util.getUsernameFromRequest(request);
+        List<Post> posts = new ArrayList<>();
+        for(Follow follow : followRepository.findByFollower(username)){
+            for(Post post : postRepository.findAll()){
+                if(post.getUsername().equals(follow.getFollowing())){
+                    posts.add(post);
+                }
+            }
+        }
+        return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 }
