@@ -12,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 
 @RestController
@@ -59,5 +60,10 @@ public class UserController {
     @PostMapping("/follow/{username}")
     public ResponseEntity<String> follow(@PathVariable String username,HttpServletRequest request){
         return followService.addFollower(username,request);
+    }
+
+    @GetMapping("followers")
+    public ResponseEntity<List<UserDTO>> getFollowers(HttpServletRequest request){
+        return followService.getFollowers(request);
     }
 }
