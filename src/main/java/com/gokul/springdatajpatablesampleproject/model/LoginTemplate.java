@@ -1,8 +1,5 @@
 package com.gokul.springdatajpatablesampleproject.model;
 
-import org.springframework.stereotype.Component;
-
-
 public class LoginTemplate {
     private String username;
     private String password;

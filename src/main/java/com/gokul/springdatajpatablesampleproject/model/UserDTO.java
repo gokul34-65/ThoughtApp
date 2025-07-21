@@ -1,10 +1,5 @@
 package com.gokul.springdatajpatablesampleproject.model;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-
-import java.util.Set;
-
 public class UserDTO {
 
 

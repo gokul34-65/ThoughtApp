@@ -1,6 +1,5 @@
 package com.gokul.springdatajpatablesampleproject.service;
 
-
 import com.gokul.springdatajpatablesampleproject.model.User;
 import com.gokul.springdatajpatablesampleproject.model.UserPrincipal;
 import com.gokul.springdatajpatablesampleproject.repository.UserRepository;

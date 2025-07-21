@@ -1,4 +1,5 @@
 package com.gokul.springdatajpatablesampleproject.controller;
+
 import com.gokul.springdatajpatablesampleproject.model.Post;
 import com.gokul.springdatajpatablesampleproject.service.PostService;
 import com.gokul.springdatajpatablesampleproject.service.RoleService;
