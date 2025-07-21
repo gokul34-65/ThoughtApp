@@ -110,6 +110,8 @@ public class UserController {
     public ResponseEntity<String> addComment(HttpServletRequest request, @PathVariable Long post_id, @RequestBody Comment comment){
         return commentService.addComment(request,post_id,comment);
     }
-
-
+    @GetMapping("comment/{post_id}")
+    public ResponseEntity<List<Comment>> getComments(@PathVariable Long post_id){
+        return commentService.getComment(post_id);
+    }
 }

@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CommentService {
 
@@ -26,5 +28,9 @@ public class CommentService {
         newcomment.setPostId(postId);
         commentRepository.save(newcomment);
         return new ResponseEntity<>("Comment added successfully",HttpStatus.CREATED);
+    }
+
+    public ResponseEntity<List<Comment>> getComment(Long postId) {
+        return new ResponseEntity<>(commentRepository.findByPostId(postId),HttpStatus.OK);
     }
 }
