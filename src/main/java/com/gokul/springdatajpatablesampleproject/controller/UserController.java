@@ -93,4 +93,9 @@ public class UserController {
     public ResponseEntity<String> star(HttpServletRequest request,@PathVariable Long post_id){
         return starService.addStar(request,post_id);
     }
+
+    @DeleteMapping("unstar/{post_id}")
+    public ResponseEntity<String> unstar(HttpServletRequest request,@PathVariable Long post_id){
+        return starService.unStar(request,post_id);
+    }
 }

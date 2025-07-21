@@ -18,5 +18,5 @@ public class Star {
     private Long id;
 
     private String username;
-    private Long post_id;
+    private Long postId;
 }
