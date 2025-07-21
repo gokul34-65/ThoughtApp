@@ -62,4 +62,14 @@ public class PostService {
         List<Post> posts = postRepository.findByUsername(username);
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
+
+    public ResponseEntity<Post> getPostById(Long postId) {
+        Post post = postRepository.findById(postId).orElse(null);
+        if(post == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        else {
+            return new ResponseEntity<>(post, HttpStatus.OK);
+        }
+    }
 }

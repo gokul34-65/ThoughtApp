@@ -76,4 +76,9 @@ public class UserController {
     public ResponseEntity<List<Post>> getCurrentUserPosts(HttpServletRequest request){
         return postService.getCurrentUserPosts(request);
     }
+
+    @GetMapping("post/{post_id}")
+    public ResponseEntity<Post> getPost(@PathVariable("post_id") Long post_id){
+        return postService.getPostById(post_id);
+    }
 }
