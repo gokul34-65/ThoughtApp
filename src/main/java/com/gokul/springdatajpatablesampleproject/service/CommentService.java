@@ -47,4 +47,17 @@ public class CommentService {
         commentRepository.save(comment1);
         return new ResponseEntity<>("Comment updated successfully",HttpStatus.OK);
     }
+
+    public ResponseEntity<String> deleteComment(HttpServletRequest request, Long commentId) {
+        String username = util.getUsernameFromRequest(request);
+        if(!util.commentExists(commentId)){
+            return new ResponseEntity<>("Requested comment not found",HttpStatus.BAD_REQUEST);
+        }
+        Comment comment1 = commentRepository.findById(commentId).get();
+        if(!comment1.getUserName().equals(username)){
+            return new ResponseEntity<>("Not authorized",HttpStatus.UNAUTHORIZED);
+        }
+       commentRepository.delete(comment1);
+        return new ResponseEntity<>("Comment deleted successfully",HttpStatus.OK);
+    }
 }

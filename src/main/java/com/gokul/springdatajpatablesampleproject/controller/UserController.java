@@ -118,4 +118,8 @@ public class UserController {
     public ResponseEntity<String> updateComment(HttpServletRequest request, @PathVariable Long comment_id, @RequestBody Comment comment){
         return commentService.updateComment(request,comment_id,comment);
     }
+    @DeleteMapping("/comment/delete/{comment_id}")
+    public ResponseEntity<String> deleteComment(HttpServletRequest request, @PathVariable Long comment_id){
+        return commentService.deleteComment(request,comment_id);
+    }
 }
