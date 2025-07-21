@@ -1,11 +1,15 @@
 package com.gokul.springdatajpatablesampleproject.service;
 
+import com.gokul.springdatajpatablesampleproject.model.Post;
 import com.gokul.springdatajpatablesampleproject.model.User;
 import com.gokul.springdatajpatablesampleproject.model.UserDTO;
+import com.gokul.springdatajpatablesampleproject.repository.PostRepository;
 import com.gokul.springdatajpatablesampleproject.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class Util {
@@ -15,6 +19,9 @@ public class Util {
 
     @Autowired
     JwtUtil jwtUtil;
+
+    @Autowired
+    PostRepository postRepository;
 
     public UserDTO getUserDTOByUsername(String username){
         UserDTO userDTO = new UserDTO();
@@ -35,5 +42,15 @@ public class Util {
         String token = authorization.substring(7);
         String username = jwtUtil.extractUserName(token);
         return username;
+    }
+
+    public boolean postExists(Long postId) {
+        List<Post> posts = postRepository.findAll();
+        for (Post post : posts) {
+            if(post.getId().equals(postId)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

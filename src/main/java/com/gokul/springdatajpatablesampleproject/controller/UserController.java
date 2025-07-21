@@ -26,6 +26,9 @@ public class UserController {
     @Autowired
     FollowService followService;
 
+    @Autowired
+    StarService starService;
+
     @PostMapping("addRole")
     public ResponseEntity<String> addRole(@RequestBody Role role){
         return roleService.addRole(role);
@@ -84,5 +87,10 @@ public class UserController {
     @DeleteMapping("post/delete/{post_id}")
     public ResponseEntity<String> deletePost(HttpServletRequest request, @PathVariable Long post_id){
         return postService.deletePost(request,post_id);
+    }
+
+    @PostMapping("star/{post_id}")
+    public ResponseEntity<String> star(HttpServletRequest request,@PathVariable Long post_id){
+        return starService.addStar(request,post_id);
     }
 }

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Like {
+public class Star {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
