@@ -45,6 +45,20 @@ public class FollowService {
         followRepository.save(follow);
         return new  ResponseEntity<>("Your are now following "+username, HttpStatus.OK);
     }
+    public ResponseEntity<String> deleteFollower(String username, HttpServletRequest request) {
+        User user = userRepository.findByUsername(username);
+        if(user == null){
+            return new ResponseEntity<>("User not found to unfollow", HttpStatus.NOT_FOUND);
+        }
+        String follower = util.getUsernameFromRequest(request);
+        for(Follow follow : followRepository.findAll()){
+            if(follow.getFollower().equals(follower) &&  follow.getFollowing().equals(username)){
+                followRepository.delete(follow);
+                return new  ResponseEntity<>("unfollow successfull", HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>("Already not following!", HttpStatus.NOT_FOUND);
+    }
 
     public ResponseEntity<List<UserDTO>> getFollowers(HttpServletRequest request) {
         List<Follow> follows = followRepository.findByFollowing(util.getUsernameFromRequest(request));
@@ -59,4 +73,6 @@ public class FollowService {
         }
         return new ResponseEntity<>(userDTOs, HttpStatus.OK);
     }
+
+
 }
