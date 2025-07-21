@@ -33,4 +33,18 @@ public class CommentService {
     public ResponseEntity<List<Comment>> getComment(Long postId) {
         return new ResponseEntity<>(commentRepository.findByPostId(postId),HttpStatus.OK);
     }
+
+    public ResponseEntity<String> updateComment(HttpServletRequest request, Long commentId, Comment comment) {
+        String username = util.getUsernameFromRequest(request);
+        if(!util.commentExists(commentId)){
+            return new ResponseEntity<>("Requested comment not found",HttpStatus.BAD_REQUEST);
+        }
+        Comment comment1 = commentRepository.findById(commentId).get();
+        if(!comment1.getUserName().equals(username)){
+            return new ResponseEntity<>("Not authorized",HttpStatus.UNAUTHORIZED);
+        }
+        comment1.setContent(comment.getContent());
+        commentRepository.save(comment1);
+        return new ResponseEntity<>("Comment updated successfully",HttpStatus.OK);
+    }
 }

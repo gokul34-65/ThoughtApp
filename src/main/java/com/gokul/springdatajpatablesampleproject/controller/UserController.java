@@ -114,4 +114,8 @@ public class UserController {
     public ResponseEntity<List<Comment>> getComments(@PathVariable Long post_id){
         return commentService.getComment(post_id);
     }
+    @PutMapping("comment/update/{comment_id}")
+    public ResponseEntity<String> updateComment(HttpServletRequest request, @PathVariable Long comment_id, @RequestBody Comment comment){
+        return commentService.updateComment(request,comment_id,comment);
+    }
 }

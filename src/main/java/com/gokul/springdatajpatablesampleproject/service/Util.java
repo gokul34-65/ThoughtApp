@@ -1,8 +1,10 @@
 package com.gokul.springdatajpatablesampleproject.service;
 
+import com.gokul.springdatajpatablesampleproject.model.Comment;
 import com.gokul.springdatajpatablesampleproject.model.Post;
 import com.gokul.springdatajpatablesampleproject.model.User;
 import com.gokul.springdatajpatablesampleproject.model.UserDTO;
+import com.gokul.springdatajpatablesampleproject.repository.CommentRepository;
 import com.gokul.springdatajpatablesampleproject.repository.PostRepository;
 import com.gokul.springdatajpatablesampleproject.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,6 +24,9 @@ public class Util {
 
     @Autowired
     PostRepository postRepository;
+
+    @Autowired
+    CommentRepository commentRepository;
 
     public UserDTO getUserDTOByUsername(String username){
         UserDTO userDTO = new UserDTO();
@@ -48,6 +53,16 @@ public class Util {
         List<Post> posts = postRepository.findAll();
         for (Post post : posts) {
             if(post.getId().equals(postId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean commentExists(Long commentId) {
+        List<Comment> comments = commentRepository.findAll();
+        for (Comment comment : comments) {
+            if(comment.getId().equals(commentId)) {
                 return true;
             }
         }
