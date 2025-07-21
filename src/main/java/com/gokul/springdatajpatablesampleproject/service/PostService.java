@@ -2,8 +2,10 @@ package com.gokul.springdatajpatablesampleproject.service;
 
 import com.gokul.springdatajpatablesampleproject.model.Follow;
 import com.gokul.springdatajpatablesampleproject.model.Post;
+import com.gokul.springdatajpatablesampleproject.model.Star;
 import com.gokul.springdatajpatablesampleproject.repository.FollowRepository;
 import com.gokul.springdatajpatablesampleproject.repository.PostRepository;
+import com.gokul.springdatajpatablesampleproject.repository.StarRepository;
 import com.gokul.springdatajpatablesampleproject.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class PostService {
 
     @Autowired
     FollowRepository followRepository;
+
+    @Autowired
+    StarRepository starRepository;
 
     @Autowired
     Util util;
@@ -101,7 +106,12 @@ public class PostService {
 
     public ResponseEntity<List<Post>> getStarredPosts(HttpServletRequest request) {
         String currentUserName =  util.getUsernameFromRequest(request);
-        List<Post> posts = postRepository.findByUsername(currentUserName);
+        List<Star> stars = starRepository.findByUsername(currentUserName);
+        List<Post>posts = new ArrayList<>();
+        for(Star star : stars){
+            Long id = star.getPostId();
+            posts.add(postRepository.findById(id).orElse(null));
+        }
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 }
