@@ -86,4 +86,16 @@ public class PostService {
        postRepository.save(post_from_database);
        return new ResponseEntity<>("Post updated successfully", HttpStatus.OK);
     }
+    public ResponseEntity<String> deletePost(HttpServletRequest request, Long postId) {
+        Post post_from_database = postRepository.findById(postId).orElse(null);
+        if(post_from_database == null){
+            return new ResponseEntity<>("Post unavailable for deletion",HttpStatus.NOT_FOUND);
+        }
+        String username = util.getUsernameFromRequest(request);
+        if(!username.equals(post_from_database.getUsername())){
+            return new  ResponseEntity<>("Not your post!",HttpStatus.UNAUTHORIZED);
+        }
+        postRepository.delete(post_from_database);
+        return new ResponseEntity<>("Post deleted successfully", HttpStatus.OK);
+    }
 }

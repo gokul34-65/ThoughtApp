@@ -80,4 +80,9 @@ public class UserController {
     public ResponseEntity<String> updatePost(HttpServletRequest request, @PathVariable Long post_id, @RequestBody Post post){
         return postService.updatePost(request,post_id,post);
     }
+
+    @DeleteMapping("post/delete/{post_id}")
+    public ResponseEntity<String> deletePost(HttpServletRequest request, @PathVariable Long post_id){
+        return postService.deletePost(request,post_id);
+    }
 }
