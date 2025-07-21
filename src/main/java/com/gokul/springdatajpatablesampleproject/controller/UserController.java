@@ -29,6 +29,9 @@ public class UserController {
     @Autowired
     StarService starService;
 
+    @Autowired
+    CommentService commentService;
+
     @PostMapping("addRole")
     public ResponseEntity<String> addRole(@RequestBody Role role){
         return roleService.addRole(role);
@@ -103,4 +106,10 @@ public class UserController {
     public ResponseEntity<List<Post>> getStarredPosts(HttpServletRequest request){
         return postService.getStarredPosts(request);
     }
+    @PostMapping("comment/{post_id}")
+    public ResponseEntity<String> addComment(HttpServletRequest request, @PathVariable Long post_id, @RequestBody Comment comment){
+        return commentService.addComment(request,post_id,comment);
+    }
+
+
 }
