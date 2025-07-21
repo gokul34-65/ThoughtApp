@@ -71,4 +71,9 @@ public class UserController {
     public ResponseEntity<List<Post>> getPersonalFeed(HttpServletRequest request){
         return postService.getPersonalFeed(request);
     }
+
+    @GetMapping("myposts")
+    public ResponseEntity<List<Post>> getCurrentUserPosts(HttpServletRequest request){
+        return postService.getCurrentUserPosts(request);
+    }
 }

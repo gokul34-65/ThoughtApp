@@ -56,4 +56,10 @@ public class PostService {
         }
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
+
+    public ResponseEntity<List<Post>> getCurrentUserPosts(HttpServletRequest request) {
+        String username = util.getUsernameFromRequest(request);
+        List<Post> posts = postRepository.findByUsername(username);
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
 }
