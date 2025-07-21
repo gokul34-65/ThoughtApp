@@ -81,4 +81,10 @@ public class UserController {
     public ResponseEntity<Post> getPost(@PathVariable("post_id") Long post_id){
         return postService.getPostById(post_id);
     }
+
+    @PutMapping("post/update/{post_id}")
+    public ResponseEntity<String> updatePost(HttpServletRequest request, @RequestParam Long post_id, @RequestBody Post post){
+        System.out.println("int update method");
+        return postService.updatePost(request,post_id,post);
+    }
 }

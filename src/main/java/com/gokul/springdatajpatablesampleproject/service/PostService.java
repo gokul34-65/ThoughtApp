@@ -72,4 +72,18 @@ public class PostService {
             return new ResponseEntity<>(post, HttpStatus.OK);
         }
     }
+
+    public ResponseEntity<String> updatePost(HttpServletRequest request, Long postId,Post post) {
+        Post post_from_database = postRepository.findById(postId).orElse(null);
+        if(post_from_database == null){
+            return new ResponseEntity<>("Post unavailable for updation",HttpStatus.NOT_FOUND);
+        }
+        String username = util.getUsernameFromRequest(request);
+       if(!username.equals(post_from_database.getUsername())){
+           return new  ResponseEntity<>("Not your post!",HttpStatus.UNAUTHORIZED);
+       }
+       post_from_database.setContent(post.getContent());
+       postRepository.save(post_from_database);
+       return new ResponseEntity<>("Post updated successfully", HttpStatus.OK);
+    }
 }
