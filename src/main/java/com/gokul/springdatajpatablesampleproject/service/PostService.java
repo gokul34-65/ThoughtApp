@@ -98,4 +98,10 @@ public class PostService {
         postRepository.delete(post_from_database);
         return new ResponseEntity<>("Post deleted successfully", HttpStatus.OK);
     }
+
+    public ResponseEntity<List<Post>> getStarredPosts(HttpServletRequest request) {
+        String currentUserName =  util.getUsernameFromRequest(request);
+        List<Post> posts = postRepository.findByUsername(currentUserName);
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
 }

@@ -98,4 +98,9 @@ public class UserController {
     public ResponseEntity<String> unstar(HttpServletRequest request,@PathVariable Long post_id){
         return starService.unStar(request,post_id);
     }
+
+    @GetMapping("starred")
+    public ResponseEntity<List<Post>> getStarredPosts(HttpServletRequest request){
+        return postService.getStarredPosts(request);
+    }
 }
