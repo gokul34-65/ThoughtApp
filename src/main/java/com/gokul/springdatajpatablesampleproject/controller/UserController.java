@@ -67,6 +67,11 @@ public class UserController {
         return followService.deleteFollower(username,request);
     }
 
+    @GetMapping("follow/{username}")
+    public ResponseEntity<Boolean> isFollowing(@PathVariable String username,HttpServletRequest request){
+        return followService.isFollowing(request,username);
+    }
+
     @GetMapping("followers")
     public ResponseEntity<List<UserDTO>> getFollowers(HttpServletRequest request){
         return followService.getFollowers(request);

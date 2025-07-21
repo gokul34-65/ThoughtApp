@@ -68,4 +68,14 @@ public class Util {
         }
         return false;
     }
+
+    public boolean userExists(String username) {
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            if(user.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

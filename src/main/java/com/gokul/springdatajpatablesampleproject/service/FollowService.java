@@ -75,4 +75,16 @@ public class FollowService {
     }
 
 
+    public ResponseEntity<Boolean> isFollowing(HttpServletRequest request, String username) {
+        if(!util.userExists(username)){
+            return new ResponseEntity<>(false,HttpStatus.BAD_REQUEST);
+        }
+        String currentUsername = util.getUsernameFromRequest(request);
+        for(Follow follow : followRepository.findAll()){
+            if(follow.getFollower().equals(currentUsername) &&  follow.getFollowing().equals(username)){
+                return new ResponseEntity<>(true,HttpStatus.FOUND);
+            }
+        }
+        return new ResponseEntity<>(false,HttpStatus.NOT_FOUND);
+    }
 }
