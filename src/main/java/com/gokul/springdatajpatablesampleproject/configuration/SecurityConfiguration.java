@@ -42,7 +42,7 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
-        http.cors(cors-> cors.disable());
+        http.cors(cors-> cors.configurationSource(corsConfigurationSource()));
         http.csrf(customizer -> customizer.disable());
         http.authorizeHttpRequests(customizer -> customizer
                 .requestMatchers("/auth/*").permitAll()
@@ -57,8 +57,9 @@ public class SecurityConfiguration {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("https://thought-app-frontend.vercel.app","https://thought-app-frontend.vercel.app/"));
-        configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setExposedHeaders(Arrays.asList("Authorization"));
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
