@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("user")
+
 public class UserController {
     @Autowired
     RoleService roleService;
@@ -76,6 +77,12 @@ public class UserController {
     public ResponseEntity<List<UserDTO>> getFollowers(HttpServletRequest request){
         return followService.getFollowers(request);
     }
+
+    @GetMapping("following")
+    public ResponseEntity<List<UserDTO>> getFollowing(HttpServletRequest request){
+        return followService.getFollowing(request);
+    }
+
 
     @GetMapping("personalFeed")
     public ResponseEntity<List<Post>> getPersonalFeed(HttpServletRequest request){

@@ -73,6 +73,19 @@ public class FollowService {
         }
         return new ResponseEntity<>(userDTOs, HttpStatus.OK);
     }
+    public ResponseEntity<List<UserDTO>> getFollowing(HttpServletRequest request) {
+        List<Follow> follows = followRepository.findByFollower(util.getUsernameFromRequest(request));
+        List<UserDTO> userDTOs = new ArrayList<>();
+        for(Follow follow : follows){
+            User follower = userRepository.findByUsername(follow.getFollowing());
+            UserDTO userDTO = new UserDTO();
+            userDTO.setDisplayName(follower.getDisplayName());
+            userDTO.setBio(follower.getBio());
+            userDTO.setLocation(follower.getLocation());
+            userDTOs.add(userDTO);
+        }
+        return new ResponseEntity<>(userDTOs, HttpStatus.OK);
+    }
 
 
     public ResponseEntity<Boolean> isFollowing(HttpServletRequest request, String username) {
@@ -82,9 +95,11 @@ public class FollowService {
         String currentUsername = util.getUsernameFromRequest(request);
         for(Follow follow : followRepository.findAll()){
             if(follow.getFollower().equals(currentUsername) &&  follow.getFollowing().equals(username)){
-                return new ResponseEntity<>(true,HttpStatus.FOUND);
+                return new ResponseEntity<>(true,HttpStatus.OK);
             }
         }
-        return new ResponseEntity<>(false,HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(false,HttpStatus.OK);
     }
+
+
 }
